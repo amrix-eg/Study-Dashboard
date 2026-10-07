@@ -229,4 +229,4 @@ Study-Hub/
 
 ---
 
-C Study dashboard
+© 2026 Study Dashboard

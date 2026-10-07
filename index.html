@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <title>Study Hub & Daily Dashboard</title>
+
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div id="app">
+
+    
+    <header id="mainHeader" class="sticky top-0 z-40 px-4 pt-4">
+        <div class="max-w-7xl mx-auto glass rounded-3xl px-4 md:px-6 py-4">
+            <div class="flex items-center justify-between gap-4">
+
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-2xl primary-btn flex items-center justify-center">
+                        <i data-lucide="graduation-cap" class="w-6 h-6 text-white"></i>
+                    </div>
+
+                    <div>
+                        <h1 class="font-black text-lg md:text-xl">
+                            Study <span class="gradient-text">Hub</span>
+                        </h1>
+                        <p class="text-xs opacity-60">Your Daily Study Dashboard</p>
+                    </div>
+                </div>
+
+                <div class="hidden md:flex items-center gap-2">
+                    <button class="nav-btn active px-4 py-2 rounded-xl text-sm" onclick="scrollToSection('dashboard')">
+                        الرئيسية
+                    </button>
+
+                    <button class="nav-btn px-4 py-2 rounded-xl text-sm" onclick="scrollToSection('schedule')">
+                        الجدول
+                    </button>
+
+                    <button class="nav-btn px-4 py-2 rounded-xl text-sm" onclick="scrollToSection('timer')">
+                        المؤقت
+                    </button>
+
+                    <button class="nav-btn px-4 py-2 rounded-xl text-sm" onclick="scrollToSection('calculator')">
+                        الحاسبة
+                    </button>
+                </div>
+
+                <div class="flex items-center gap-2">
+
+                    <button
+                        id="notificationButton"
+                        onclick="requestNotifications()"
+                        class="w-10 h-10 rounded-xl glass flex items-center justify-center hover:bg-white/10 transition"
+                        title="تفعيل الإشعارات">
+                        <i data-lucide="bell" class="w-5 h-5"></i>
+                    </button>
+
+                    <button
+                        onclick="toggleTheme()"
+                        class="w-10 h-10 rounded-xl glass flex items-center justify-center hover:bg-white/10 transition">
+                        <i id="themeIcon" data-lucide="sun" class="w-5 h-5"></i>
+                    </button>
+
+                    <button
+                        onclick="toggleDeepWork()"
+                        class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl glass hover:bg-white/10 transition text-sm">
+                        <i data-lucide="focus" class="w-4 h-4"></i>
+                        Deep Work
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </header>
+
+    
+    <main id="mainContent" class="max-w-7xl mx-auto px-4 pb-20">
+
+        
+        <section id="dashboard" class="pt-8 md:pt-12">
+
+            <div class="grid lg:grid-cols-3 gap-5">
+
+                
+                <div class="lg:col-span-2 glass glass-hover rounded-3xl p-6 md:p-8 fade-in">
+                    <div class="flex flex-col md:flex-row justify-between gap-6">
+
+                        <div>
+                            <p id="currentDate" class="text-sm opacity-60 mb-3"></p>
+
+                            <h2 class="text-3xl md:text-5xl font-black leading-tight">
+                                أهلاً بك في
+                                <span class="gradient-text">Study Hub</span>
+                            </h2>
+
+                            <p class="opacity-65 mt-4 max-w-xl leading-7">
+                                نظم يومك، ركّز في مذاكرتك، وتابع تقدمك خطوة بخطوة.
+                                خلي وقتك تحت سيطرتك.
+                            </p>
+
+                            <div class="flex flex-wrap gap-3 mt-6">
+                                <button onclick="scrollToSection('timer')" class="primary-btn px-5 py-3 rounded-2xl font-bold flex items-center gap-2">
+                                    <i data-lucide="play" class="w-4 h-4"></i>
+                                    ابدأ المذاكرة
+                                </button>
+
+                                <button onclick="openScheduleModal()" class="glass px-5 py-3 rounded-2xl font-bold flex items-center gap-2">
+                                    <i data-lucide="plus" class="w-4 h-4"></i>
+                                    إضافة درس
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="float hidden md:flex w-40 h-40 rounded-full bg-gradient-to-br from-violet-500/20 to-cyan-500/10 items-center justify-center border border-white/10">
+                            <i data-lucide="book-open-check" class="w-20 h-20 text-violet-300"></i>
+                        </div>
+
+                    </div>
+                </div>
+
+               
+                <div class="glass glass-hover rounded-3xl p-6 fade-in">
+                    <div class="flex items-center justify-between mb-5">
+                        <div>
+                            <p class="text-xs opacity-50">اليوم</p>
+                            <h3 class="font-bold text-xl">ملخص يومك</h3>
+                        </div>
+
+                        <div class="w-10 h-10 rounded-xl bg-violet-500/10 flex items-center justify-center">
+                            <i data-lucide="bar-chart-3" class="text-violet-300 w-5 h-5"></i>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+
+                        <div class="flex justify-between items-center">
+                            <span class="opacity-60 text-sm">المهام</span>
+                            <span id="taskCount" class="font-bold">0 / 0</span>
+                        </div>
+
+                        <div class="h-2 rounded-full bg-white/5 overflow-hidden">
+                            <div id="taskProgress" class="h-full bg-gradient-to-r from-violet-500 to-cyan-400 rounded-full transition-all duration-500" style="width:0%"></div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3 pt-2">
+
+                            <div class="rounded-2xl bg-white/5 p-4">
+                                <p class="text-xs opacity-50">الدروس</p>
+                                <p id="lessonCount" class="text-2xl font-black mt-1">0</p>
+                            </div>
+
+                            <div class="rounded-2xl bg-white/5 p-4">
+                                <p class="text-xs opacity-50">ساعات التركيز</p>
+                                <p id="focusHours" class="text-2xl font-black mt-1">0h</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-5">
+
+                <div class="glass glass-hover rounded-3xl p-5">
+                    <div class="flex items-center justify-between">
+                        <div class="w-11 h-11 rounded-2xl bg-violet-500/10 flex items-center justify-center">
+                            <i data-lucide="timer" class="text-violet-300"></i>
+                        </div>
+                        <span class="text-xs opacity-50">Pomodoro</span>
+                    </div>
+                    <p id="miniTimer" class="text-3xl font-black mt-5">25:00</p>
+                    <p class="text-xs opacity-50 mt-1">جلسة التركيز القادمة</p>
+                </div>
+
+                <div class="glass glass-hover rounded-3xl p-5">
+                    <div class="flex items-center justify-between">
+                        <div class="w-11 h-11 rounded-2xl bg-emerald-500/10 flex items-center justify-center">
+                            <i data-lucide="check-circle-2" class="text-emerald-300"></i>
+                        </div>
+                        <span class="text-xs opacity-50">Tasks</span>
+                    </div>
+                    <p id="completedCount" class="text-3xl font-black mt-5">0</p>
+                    <p class="text-xs opacity-50 mt-1">مهمة مكتملة</p>
+                </div>
+
+                <div class="glass glass-hover rounded-3xl p-5">
+                    <div class="flex items-center justify-between">
+                        <div class="w-11 h-11 rounded-2xl bg-cyan-500/10 flex items-center justify-center">
+                            <i data-lucide="calendar-days" class="text-cyan-300"></i>
+                        </div>
+                        <span class="text-xs opacity-50">Schedule</span>
+                    </div>
+                    <p id="nextLessonMini" class="text-lg font-black mt-5">لا يوجد</p>
+                    <p class="text-xs opacity-50 mt-1">الدرس القادم</p>
+                </div>
+
+                <div class="glass glass-hover rounded-3xl p-5">
+                    <div class="flex items-center justify-between">
+                        <div class="w-11 h-11 rounded-2xl bg-amber-500/10 flex items-center justify-center">
+                            <i data-lucide="flame" class="text-amber-300"></i>
+                        </div>
+                        <span class="text-xs opacity-50">Focus</span>
+                    </div>
+                    <p id="sessionCount" class="text-3xl font-black mt-5">0</p>
+                    <p class="text-xs opacity-50 mt-1">جلسة تركيز مكتملة</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="schedule" class="pt-14">
+
+            <div class="grid lg:grid-cols-3 gap-5">
+
+                
+                <div class="lg:col-span-2 glass rounded-3xl p-6">
+
+                    <div class="flex flex-wrap justify-between items-center gap-3 mb-6">
+                        <div>
+                            <p class="text-xs opacity-50">SMART SCHEDULE</p>
+                            <h2 class="text-2xl font-black mt-1">الجدول اليومي</h2>
+                        </div>
+
+                        <button onclick="openScheduleModal()" class="primary-btn px-4 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                            إضافة درس
+                        </button>
+                    </div>
+
+                    <div id="scheduleList" class="space-y-3"></div>
+
+                    <div id="emptySchedule" class="hidden text-center py-12 opacity-50">
+                        <i data-lucide="calendar-x-2" class="w-12 h-12 mx-auto mb-3"></i>
+                        <p>لا توجد دروس مضافة اليوم</p>
+                        <button onclick="openScheduleModal()" class="text-violet-400 mt-2">
+                            أضف أول درس
+                        </button>
+                    </div>
+
+                </div>
+
+               
+                <div class="glass rounded-3xl p-6">
+
+                    <div class="flex items-center justify-between mb-5">
+                        <div>
+                            <p class="text-xs opacity-50">PRAYER TIMES</p>
+                            <h2 class="text-2xl font-black mt-1">مواقيت الصلاة</h2>
+                        </div>
+
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center">
+                            <i data-lucide="moon-star" class="text-emerald-300"></i>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="text-xs opacity-50 block mb-2">المدينة</label>
+                        <select id="citySelect" class="input" onchange="loadPrayerTimes()">
+                            <option value="Cairo">القاهرة</option>
+                            <option value="Giza">الجيزة</option>
+                            <option value="Alexandria">الإسكندرية</option>
+                        </select>
+                    </div>
+
+                    <div id="prayerList" class="space-y-2"></div>
+
+                    <button onclick="requestNotifications()" class="w-full mt-5 emerald-btn py-3 rounded-xl font-bold flex justify-center items-center gap-2">
+                        <i data-lucide="bell-ring" class="w-4 h-4"></i>
+                        تفعيل التنبيهات
+                    </button>
+
+                </div>
+
+            </div>
+        </section>
+
+       
+        <section class="pt-5">
+
+            <div class="glass rounded-3xl p-6">
+
+                <div class="flex flex-wrap justify-between items-center gap-3 mb-6">
+                    <div>
+                        <p class="text-xs opacity-50">DAILY TO-DO</p>
+                        <h2 class="text-2xl font-black mt-1">مهام اليوم</h2>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <input
+                            id="taskInput"
+                            class="input !w-auto min-w-[180px]"
+                            placeholder="اكتب مهمة جديدة..."
+                            onkeydown="if(event.key === 'Enter') addTask()">
+
+                        <button onclick="addTask()" class="primary-btn px-4 rounded-xl">
+                            <i data-lucide="plus" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="taskList" class="grid md:grid-cols-2 gap-3"></div>
+
+            </div>
+        </section>
+
+       
+        <section id="timer" class="pt-14">
+
+            <div class="grid lg:grid-cols-3 gap-5">
+
+                <div class="lg:col-span-2 glass rounded-3xl p-6 md:p-8 text-center">
+
+                    <div class="mb-4">
+                        <p class="text-xs opacity-50">INTERACTIVE POMODORO</p>
+                        <h2 class="text-3xl font-black mt-1">مؤقت المذاكرة</h2>
+                    </div>
+
+                    <div class="relative w-72 h-72 md:w-80 md:h-80 mx-auto">
+
+                        <svg class="w-full h-full progress-ring" viewBox="0 0 260 260">
+                            <circle
+                                cx="130"
+                                cy="130"
+                                r="108"
+                                stroke="rgba(255,255,255,0.06)"
+                                stroke-width="12"
+                                fill="none">
+                            </circle>
+
+                            <circle
+                                id="progressCircle"
+                                cx="130"
+                                cy="130"
+                                r="108"
+                                stroke="#8b5cf6"
+                                stroke-width="12"
+                                stroke-linecap="round"
+                                fill="none"
+                                stroke-dasharray="678.58"
+                                stroke-dashoffset="0"
+                                class="transition-all duration-500">
+                            </circle>
+                        </svg>
+
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <span id="timerMode" class="text-sm opacity-50">وقت المذاكرة</span>
+                            <span id="timerDisplay" class="text-6xl font-black tracking-tight mt-2">
+                                25:00
+                            </span>
+                            <span id="sessionLabel" class="text-xs opacity-40 mt-2">
+                                Session 1
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="flex justify-center flex-wrap gap-3 mt-5">
+
+                        <button id="timerStartButton" onclick="toggleTimer()" class="primary-btn px-7 py-3 rounded-2xl font-bold flex items-center gap-2">
+                            <i data-lucide="play" class="w-5 h-5"></i>
+                            ابدأ
+                        </button>
+
+                        <button onclick="resetTimer()" class="glass px-5 py-3 rounded-2xl font-bold flex items-center gap-2">
+                            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                            إعادة
+                        </button>
+
+                        <button onclick="skipTimerMode()" class="glass px-5 py-3 rounded-2xl font-bold">
+                            تخطي
+                        </button>
+
+                    </div>
+
+                </div>
+
+                
+                <div class="space-y-5">
+
+                    <div class="glass rounded-3xl p-6">
+                        <div class="flex items-center gap-3">
+                            <div class="w-11 h-11 rounded-2xl bg-violet-500/10 flex items-center justify-center">
+                                <i data-lucide="brain" class="text-violet-300"></i>
+                            </div>
+
+                            <div>
+                                <p class="text-xs opacity-50">FOCUS SCORE</p>
+                                <p id="focusScore" class="text-2xl font-black">0%</p>
+                            </div>
+                        </div>
+
+                        <div class="h-2 bg-white/5 rounded-full mt-5 overflow-hidden">
+                            <div id="focusScoreBar" class="h-full bg-violet-500 rounded-full transition-all" style="width:0%"></div>
+                        </div>
+                    </div>
+
+                    <div class="glass rounded-3xl p-6">
+                        <p class="text-xs opacity-50">جلسة المذاكرة الحالية</p>
+                        <p id="currentSubject" class="text-2xl font-black mt-2">مذاكرة عامة</p>
+
+                        <select id="timerSubject" class="input mt-4">
+                            <option>مذاكرة عامة</option>
+                            <option>رياضيات</option>
+                            <option>علوم</option>
+                            <option>لغة عربية</option>
+                            <option>لغة إنجليزية</option>
+                            <option>دراسات اجتماعية</option>
+                            <option>برمجة</option>
+                        </select>
+                    </div>
+
+                    <button onclick="toggleDeepWork()" class="w-full glass rounded-3xl p-5 text-right hover:bg-white/5 transition">
+                        <div class="flex items-center gap-3">
+                            <div class="w-11 h-11 rounded-2xl bg-cyan-500/10 flex items-center justify-center">
+                                <i data-lucide="focus" class="text-cyan-300"></i>
+                            </div>
+
+                            <div>
+                                <p class="font-bold">Deep Work Mode</p>
+                                <p class="text-xs opacity-50 mt-1">ادخل في وضع التركيز الكامل</p>
+                            </div>
+                        </div>
+                    </button>
+
+                </div>
+
+            </div>
+        </section>
+
+       
+        <section id="calculator" class="pt-14">
+
+            <div class="grid lg:grid-cols-2 gap-5">
+
+                
+                <div class="glass rounded-3xl p-6">
+
+                    <div class="mb-5">
+                        <p class="text-xs opacity-50">MODERN CALCULATOR</p>
+                        <h2 class="text-2xl font-black mt-1">الآلة الحاسبة</h2>
+                    </div>
+
+                    <input
+                        id="calcDisplay"
+                        readonly
+                        class="input text-left text-3xl font-black h-20 mb-4"
+                        value="0"
+                        dir="ltr">
+
+                    <div class="grid grid-cols-4 gap-2">
+
+                        <button onclick="calcClear()" class="glass rounded-xl p-4 text-red-300 font-bold">C</button>
+                        <button onclick="calcInput('(')" class="glass rounded-xl p-4">(</button>
+                        <button onclick="calcInput(')')" class="glass rounded-xl p-4">)</button>
+                        <button onclick="calcInput('/')" class="cyan-btn rounded-xl p-4 text-white font-bold">÷</button>
+
+                        <button onclick="calcInput('7')" class="glass rounded-xl p-4">7</button>
+                        <button onclick="calcInput('8')" class="glass rounded-xl p-4">8</button>
+                        <button onclick="calcInput('9')" class="glass rounded-xl p-4">9</button>
+                        <button onclick="calcInput('*')" class="cyan-btn rounded-xl p-4 text-white font-bold">×</button>
+
+                        <button onclick="calcInput('4')" class="glass rounded-xl p-4">4</button>
+                        <button onclick="calcInput('5')" class="glass rounded-xl p-4">5</button>
+                        <button onclick="calcInput('6')" class="glass rounded-xl p-4">6</button>
+                        <button onclick="calcInput('-')" class="cyan-btn rounded-xl p-4 text-white font-bold">−</button>
+
+                        <button onclick="calcInput('1')" class="glass rounded-xl p-4">1</button>
+                        <button onclick="calcInput('2')" class="glass rounded-xl p-4">2</button>
+                        <button onclick="calcInput('3')" class="glass rounded-xl p-4">3</button>
+                        <button onclick="calcInput('+')" class="cyan-btn rounded-xl p-4 text-white font-bold">+</button>
+
+                        <button onclick="calcInput('0')" class="glass rounded-xl p-4 col-span-2">0</button>
+                        <button onclick="calcInput('.')" class="glass rounded-xl p-4">.</button>
+                        <button onclick="calcResult()" class="primary-btn rounded-xl p-4 text-white font-bold">=</button>
+
+                    </div>
+
+                </div>
+
+               
+                <div class="glass rounded-3xl p-6">
+
+                    <div class="mb-5">
+                        <p class="text-xs opacity-50">GRADE PREDICTOR</p>
+                        <h2 class="text-2xl font-black mt-1">حساب النسبة والتقدير</h2>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+
+                        <div>
+                            <label class="text-xs opacity-50 block mb-2">درجتك</label>
+                            <input id="scoreInput" type="number" min="0" class="input" placeholder="مثلاً 85">
+                        </div>
+
+                        <div>
+                            <label class="text-xs opacity-50 block mb-2">الدرجة النهائية</label>
+                            <input id="totalInput" type="number" min="1" class="input" placeholder="مثلاً 100">
+                        </div>
+
+                    </div>
+
+                    <button onclick="calculateGrade()" class="w-full cyan-btn text-white py-3 rounded-xl font-bold mt-4">
+                        احسب النتيجة
+                    </button>
+
+                    <div class="mt-5 rounded-3xl bg-white/5 p-6 text-center">
+                        <p class="text-sm opacity-50">النسبة المئوية</p>
+                        <p id="percentageResult" class="text-5xl font-black gradient-text mt-2">0%</p>
+                        <p id="gradeResult" class="font-bold text-lg mt-2">لم يتم الحساب بعد</p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+       
+        <section class="pt-14">
+
+            <div class="glass rounded-3xl p-6 md:p-8 relative overflow-hidden">
+
+                <div class="absolute -top-20 -left-20 w-60 h-60 bg-violet-500/10 rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-20 -right-20 w-60 h-60 bg-cyan-500/10 rounded-full blur-3xl"></div>
+
+                <div class="relative z-10">
+
+                    <div class="flex flex-wrap justify-between items-center gap-3">
+
+                        <div>
+                            <p class="text-xs opacity-50">DAILY INSPIRATION</p>
+                            <h2 class="text-2xl font-black mt-1">جرعة تحفيز اليوم</h2>
+                        </div>
+
+                        <button onclick="newQuote()" class="glass px-4 py-2 rounded-xl flex items-center gap-2 text-sm">
+                            <i data-lucide="shuffle" class="w-4 h-4"></i>
+                            نصيحة أخرى
+                        </button>
+
+                    </div>
+
+                    <div class="max-w-3xl mx-auto text-center py-10">
+
+                        <div class="w-16 h-16 rounded-3xl bg-violet-500/10 flex items-center justify-center mx-auto mb-5">
+                            <i data-lucide="sparkles" class="w-7 h-7 text-violet-300"></i>
+                        </div>
+
+                        <p id="quoteText" class="text-2xl md:text-3xl font-black leading-relaxed">
+                            النجاح لا يحتاج أن تكون الأفضل، بل يحتاج أن تستمر.
+                        </p>
+
+                        <div class="flex justify-center gap-3 mt-7">
+
+                            <button onclick="shareQuote()" class="glass px-5 py-3 rounded-xl flex items-center gap-2">
+                                <i data-lucide="share-2" class="w-4 h-4"></i>
+                                مشاركة
+                            </button>
+
+                            <button onclick="copyQuote()" class="primary-btn text-white px-5 py-3 rounded-xl flex items-center gap-2">
+                                <i data-lucide="copy" class="w-4 h-4"></i>
+                                نسخ
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    
+    <div class="mobile-nav fixed bottom-4 left-4 right-4 z-40 glass rounded-2xl p-2 justify-around">
+        <button onclick="scrollToSection('dashboard')" class="p-3 rounded-xl">
+            <i data-lucide="home" class="w-5 h-5"></i>
+        </button>
+
+        <button onclick="scrollToSection('schedule')" class="p-3 rounded-xl">
+            <i data-lucide="calendar-days" class="w-5 h-5"></i>
+        </button>
+
+        <button onclick="scrollToSection('timer')" class="p-3 rounded-xl">
+            <i data-lucide="timer" class="w-5 h-5"></i>
+        </button>
+
+        <button onclick="scrollToSection('calculator')" class="p-3 rounded-xl">
+            <i data-lucide="calculator" class="w-5 h-5"></i>
+        </button>
+    </div>
+
+</div>
+
+
+<div id="scheduleModal" class="hidden fixed inset-0 z-50 modal-bg items-center justify-center p-4">
+
+    <div class="glass rounded-3xl w-full max-w-lg p-6 fade-in">
+
+        <div class="flex items-center justify-between mb-6">
+
+            <div>
+                <p class="text-xs opacity-50">SMART SCHEDULE</p>
+                <h2 id="scheduleModalTitle" class="text-2xl font-black">إضافة درس</h2>
+            </div>
+
+            <button onclick="closeScheduleModal()" class="w-10 h-10 rounded-xl glass flex items-center justify-center">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+        </div>
+
+        <input type="hidden" id="editingLessonId">
+
+        <div class="space-y-4">
+
+            <div>
+                <label class="text-xs opacity-50 block mb-2">اسم المادة / الدرس</label>
+                <input id="lessonName" class="input" placeholder="مثلاً: مراجعة الرياضيات">
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+
+                <div>
+                    <label class="text-xs opacity-50 block mb-2">الوقت</label>
+                    <input id="lessonTime" type="time" class="input">
+                </div>
+
+                <div>
+                    <label class="text-xs opacity-50 block mb-2">النوع</label>
+                    <select id="lessonType" class="input">
+                        <option value="study">مذاكرة</option>
+                        <option value="lesson">درس</option>
+                        <option value="exam">اختبار</option>
+                        <option value="review">مراجعة</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div>
+                <label class="text-xs opacity-50 block mb-2">التنبيه قبل الدرس</label>
+
+                <select id="lessonReminder" class="input">
+                    <option value="0">في الموعد</option>
+                    <option value="5">قبل 5 دقائق</option>
+                    <option value="10">قبل 10 دقائق</option>
+                    <option value="15">قبل 15 دقيقة</option>
+                    <option value="30">قبل 30 دقيقة</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="flex gap-3 mt-6">
+
+            <button onclick="saveLesson()" class="primary-btn flex-1 py-3 rounded-xl text-white font-bold">
+                حفظ
+            </button>
+
+            <button onclick="closeScheduleModal()" class="glass px-6 py-3 rounded-xl font-bold">
+                إلغاء
+            </button>
+
+        </div>
+
+    </div>
+</div>
+
+
+<div id="deepWork" class="hidden fixed inset-0 z-[100] deep-work-bg">
+
+    <div class="min-h-screen flex items-center justify-center p-5">
+
+        <div class="w-full max-w-4xl">
+
+            <div class="flex justify-between items-center mb-8">
+
+                <div>
+                    <p class="text-xs text-white/40 tracking-widest">DEEP WORK MODE</p>
+                    <h2 class="text-white text-2xl font-black mt-1">
+                        التركيز الكامل
+                    </h2>
+                </div>
+
+                <button onclick="toggleDeepWork()" class="glass text-white px-4 py-3 rounded-xl flex items-center gap-2">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                    خروج
+                </button>
+
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-5">
+
+                <div class="glass rounded-[2rem] p-8 text-center text-white">
+
+                    <p id="deepTimerMode" class="text-white/50 mb-3">
+                        وقت المذاكرة
+                    </p>
+
+                    <p id="deepTimerDisplay" class="text-7xl md:text-8xl font-black tracking-tight">
+                        25:00
+                    </p>
+
+                    <div class="flex justify-center gap-3 mt-8">
+
+                        <button onclick="toggleTimer()" class="primary-btn px-7 py-3 rounded-xl font-bold">
+                            <span id="deepStartText">ابدأ</span>
+                        </button>
+
+                        <button onclick="resetTimer()" class="glass px-5 py-3 rounded-xl font-bold">
+                            إعادة
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="glass rounded-[2rem] p-8 text-white">
+
+                    <p class="text-white/50 text-sm">المهام الحالية</p>
+
+                    <div id="deepTasks" class="space-y-3 mt-5"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<div id="toastContainer" class="fixed bottom-5 left-5 z-[200] space-y-2"></div>
+
+<script src="js/script.js"></script>
+
+</body>
+</html>

@@ -270,7 +270,7 @@ Study-Hub/
 ├── script.js
 ├── style.css
 └── README.md
-
+```
 
 ## 🌐 Live Website
 

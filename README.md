@@ -1,10 +1,13 @@
-# 📚 Study Hub — Daily Study Dashboard
+<h1 align="center">📚 Study Hub — Daily Study Dashboard</h1>
 
-A modern, responsive **Study Dashboard** built to help students organize their day, manage study tasks, track focus sessions, and stay productive.
+<p align="center">
+  A modern, responsive study dashboard built to help students organize their day, manage study tasks, track focus sessions, and stay productive.
+</p>
 
-🔗 **Live Demo:**  https://study-dashboard343.vercel.app/
-
----
+<p align="center">
+  🔗 <strong>Live Demo:</strong>
+  <a href="https://study-dashboard343.vercel.app/">Study Hub</a>
+</p>
 
 ## ✨ Overview
 
@@ -14,9 +17,9 @@ It combines a study schedule, task management, Pomodoro timer, focus mode, grade
 
 The project features a modern **glassmorphism UI** with smooth animations, dark/light themes, and a responsive layout for desktop and mobile devices.
 
----
 
 ## 🚀 Features
+
 
 ### 📊 Dashboard
 

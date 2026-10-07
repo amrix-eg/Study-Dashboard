@@ -275,34 +275,6 @@ The current version is implemented as a single HTML file containing the interfac
 
 ---
 
-## ⚙️ Getting Started
-
-### 1. Clone the repository
-
-```bash
-git clone YOUR_REPOSITORY_URL
-```
-
-### 2. Open the project
-
-```bash
-cd Study-Hub
-```
-
-### 3. Run the project
-
-Because the current version is a standalone HTML project, you can open:
-
-```text
-index.html
-```
-
-directly in your browser.
-
-For development, you can also use a local development server such as VS Code Live Server.
-
----
-
 ## 🌐 Live Demo
 
 Try the live version:

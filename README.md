@@ -277,7 +277,7 @@ The current version is implemented as a single HTML file containing the interfac
 
 ## 🌐 Live Website
 
-[![Live Website](https://img.shields.io/badge/Live%20Website-Visit%20Website-FF0080?style=for-the-badge&labelColor=111111)](https://study-dashboard343.vercel.app/))
+[![Live Website](https://img.shields.io/badge/Live%20Website-Visit%20Website-8B5CF6?style=for-the-badge&labelColor=111111)](https://study-dashboard343.vercel.app/)
 
 ---
 

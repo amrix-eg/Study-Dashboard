@@ -4,11 +4,6 @@
   A modern, responsive study dashboard built to help students organize their day, manage study tasks, track focus sessions, and stay productive.
 </p>
 
-<p align="center">
-  🔗 <strong>Live Demo:</strong>
-  <a href="https://study-dashboard343.vercel.app/">Study Hub</a>
-</p>
-
 ## ✨ Overview
 
 **Study Hub** is an all-in-one study dashboard designed around daily productivity.

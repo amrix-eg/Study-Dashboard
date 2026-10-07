@@ -267,13 +267,10 @@ Tailwind CSS is loaded through the Tailwind CDN, while Lucide is used for the in
 Study-Hub/
 │
 ├── index.html
-│
+├── script.js
+├── style.css
 └── README.md
-```
 
-The current version is implemented as a single HTML file containing the interface, styling, and JavaScript functionality.
-
----
 
 ## 🌐 Live Website
 

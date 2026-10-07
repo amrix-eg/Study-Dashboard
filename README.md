@@ -165,19 +165,6 @@ You can:
 * Copy the quote
 * Share the quote
 
----
-
-### 🌙 Dark & Light Mode
-
-Switch between:
-
-* 🌙 Dark Mode
-* ☀️ Light Mode
-
-Your selected theme is saved locally so it can be preserved between visits.
-
----
-
 ### 🔔 Notifications
 
 The dashboard includes notification support for study reminders and scheduled activities.
@@ -209,45 +196,7 @@ The main visual palette is built around:
 
 The project also uses animated background effects and interactive UI elements to create a modern dashboard experience.
 
----
-
-## 📱 Responsive Design
-
-The dashboard is designed to work across different screen sizes.
-
-### Desktop
-
-Uses the full navigation bar and multi-column dashboard layouts.
-
-### Mobile
-
-Includes a dedicated bottom navigation bar for easier access to:
-
-* Dashboard
-* Schedule
-* Timer
-* Calculator
-
----
-
-## 💾 Data Storage
-
-Study Hub currently uses the browser's **Local Storage** to save user data.
-
-Stored information includes:
-
-* Scheduled lessons
-* Tasks
-* Selected theme
-* Completed Pomodoro sessions
-* Total focus minutes
-* Selected quote
-
-This means the project can maintain the user's data locally without requiring a backend database.
-
----
-
-## 🛠️ Technologies
+## 🛠️ Tech Stack
 
 * **HTML5**
 * **CSS3**
@@ -256,8 +205,6 @@ This means the project can maintain the user's data locally without requiring a 
 * **Lucide Icons**
 * **Local Storage API**
 * **Vercel**
-
-Tailwind CSS is loaded through the Tailwind CDN, while Lucide is used for the interface icons.
 
 ---
 
@@ -276,40 +223,10 @@ Study-Hub/
 
 [![Live Website](https://img.shields.io/badge/Live%20Website-Visit%20Website-8B5CF6?style=for-the-badge&labelColor=111111)](https://study-dashboard343.vercel.app/)
 
----
-
-## 🔮 Future Improvements
-
-Possible future improvements could include:
-
-* 👤 User accounts
-* ☁️ Cloud synchronization
-* 🗄️ Database integration
-* 📊 Advanced study analytics
-* 📚 Subject management
-* 📆 Weekly and monthly schedules
-* 🔔 More advanced reminders
-* 🏆 Study streaks
-* 🎯 Study goals
-* 📱 PWA support
-* 🔐 Authentication
-
----
-
-## 🎯 Project Purpose
-
-This project was created as a **web development project** focused on building a practical student productivity dashboard.
-
-The main goal is to combine multiple useful study tools into a single, modern, responsive interface.
-
----
-
 ## </> Developer
 
 **Developed by [Amrix](https://github.com/amrix-eg) & [Mohamed](https://github.com/PrimeDevX)**
 
 ---
 
-## ⭐ Support
-
-If you like the project, consider giving the repository a ⭐ on GitHub.
+C Study dashboard

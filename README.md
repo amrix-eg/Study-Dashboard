@@ -337,11 +337,9 @@ The main goal is to combine multiple useful study tools into a single, modern, r
 
 ---
 
-## 👨‍💻 Author
+## </> Developer
 
-**Raed**
-
-Frontend / Web Developer
+**Developed by [Amrix](https://github.com/amrix-eg) & [Mohamed](https://github.com/PrimeDevX)**
 
 ---
 
